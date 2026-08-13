@@ -47,7 +47,7 @@
       padding: 20px;
     }
 
-    /* Layar Pembuka (Welcome Screen) agar Chrome HP Mengizinkan Musik */
+    /* Layar Pembuka (Welcome Screen) */
     .welcome-screen {
       position: fixed;
       top: 0;
@@ -123,7 +123,7 @@
       border: 1.5px solid rgba(255, 255, 255, 0.9);
       border-radius: 30px;
       box-shadow: 0 20px 50px rgba(139, 94, 52, 0.12);
-      padding: 30px 24px;
+      padding: 30px 24px 45px 24px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -164,9 +164,10 @@
       margin-bottom: 16px;
     }
 
+    /* Ukuran Judul & Subtitle yang Sudah Disesuaikan (Dikecilkan) */
     .title-main {
       font-family: var(--font-title);
-      font-size: 2rem;
+      font-size: 1.5rem;
       font-weight: 500;
       font-style: italic;
       color: #3C2A21;
@@ -176,7 +177,7 @@
 
     .title-sub {
       font-family: var(--font-script);
-      font-size: 3.5rem;
+      font-size: 2.5rem;
       color: var(--accent-brown);
       line-height: 1.1;
       margin-bottom: 20px;
@@ -337,7 +338,101 @@
       border: 1px solid #E3CAA5;
     }
 
-    /* SLIDE 3 STYLES */
+    /* SLIDE 3 (BARU): KALENDER & FOTO SPESIAL */
+    .calendar-card {
+      background: #FFFDF9;
+      border: 1px solid #E3CAA5;
+      border-radius: 16px;
+      width: 100%;
+      padding: 15px;
+      box-shadow: 0 8px 20px rgba(139, 94, 52, 0.08);
+      margin: 15px 0 20px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .calendar-header {
+      background: var(--accent-brown);
+      color: #FFFDF9;
+      width: 100%;
+      padding: 8px;
+      border-radius: 10px 10px 0 0;
+      font-family: var(--font-title);
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: -15px;
+      margin-bottom: 12px;
+    }
+
+    .calendar-grid-wrapper {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      width: 100%;
+      justify-content: space-around;
+    }
+
+    .calendar-date-display {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #FAF6F0;
+      border: 2px dashed #D5B9B2;
+      border-radius: 12px;
+      padding: 12px 20px;
+      position: relative;
+    }
+
+    .calendar-day {
+      font-family: var(--font-title);
+      font-size: 2.8rem;
+      font-weight: bold;
+      color: var(--accent-brown);
+      line-height: 1;
+    }
+
+    .calendar-month {
+      font-family: var(--font-body);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #5C4033;
+      text-transform: uppercase;
+    }
+
+    .date-heart {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      font-size: 1.4rem;
+      animation: heartPulse 1.2s infinite;
+    }
+
+    @keyframes heartPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+      100% { transform: scale(1); }
+    }
+
+    .calendar-photo-container {
+      width: 110px;
+      height: 130px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 3px solid #FFFDF9;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transform: rotate(2deg);
+    }
+
+    .calendar-photo-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* SLIDE 4 STYLES (Surat) */
     .letter-box {
       background: #FFFDF9;
       border-radius: 20px;
@@ -464,6 +559,12 @@
       border-radius: 10px;
       background: var(--accent-brown);
     }
+
+    @media (max-width: 480px) {
+      .title-main { font-size: 1.35rem; }
+      .title-sub { font-size: 2.2rem; }
+      .wrapper { min-height: 520px; padding: 24px 16px 45px 16px; }
+    }
   </style>
 </head>
 <body>
@@ -472,7 +573,7 @@
   <div class="welcome-screen" id="welcomeScreen">
     <div class="welcome-content">
       <h2 style="font-family: var(--font-title); font-style: italic; color: #3C2A21; margin-bottom: 20px; font-size: 1.8rem;">Ada pesan untukmu 💌</h2>
-      <button class="btn-open" onclick="startJourney()">Buka Ucapan</button>
+      <button class="btn-open" onclick="startJourney()">Lets Goooo</button>
     </div>
   </div>
 
@@ -482,14 +583,14 @@
   <div class="bg-decor" style="bottom: 15%; left: 12%;">🎈</div>
   <div class="bg-decor" style="bottom: 20%; right: 8%;">☕</div>
 
-  <!-- Tombol kontrol musik melayang di pojok kanan atas -->
+  <!-- Tombol kontrol musik melayang -->
   <button class="music-btn" id="musicToggle" onclick="toggleMusic()">
     <span id="musicIcon">🎵</span> <span id="musicText">Nadin Amizah - Beranjak Dewasa</span>
   </button>
 
-  <!-- AUDIO: Pastikan nama file nadin.mp3 berada di folder yang sama -->
-  <audio id="bgMusic" loop>
-    <source src="nadin.mp3" type="audio/mpeg">
+  <!-- AUDIO -->
+  <audio id="bgMusic" loop preload="auto">
+    <source src="./nadin.mp3" type="audio/mpeg">
   </audio>
 
   <div class="wrapper">
@@ -497,8 +598,8 @@
     <!-- SLIDE 1: Pembuka & Kado -->
     <div class="slide active" id="slide1">
       <span class="badge-tag">a little something for you</span>
-      <h1 class="title-main">Untukmu, di usia yang baru</h1>
-      <div class="title-sub">Hilwa Khamida </div>
+      <h1 class="title-main">24, and still becoming</h1>
+      <div class="title-sub">Hilwa Khamida</div>
 
       <div class="gift-container" id="giftBox" onclick="openGift()">
         <div class="gift-lid"></div>
@@ -508,13 +609,13 @@
         </div>
       </div>
 
-      <p class="click-hint">🎁 Klik kadonya dan mari mulai!</p>
+      <p class="click-hint">🎁 Klik kadonya dan mari mulai !</p>
     </div>
 
     <!-- SLIDE 2: Foto Polaroid & Ucapan Singkat -->
     <div class="slide" id="slide2">
       <span class="badge-tag">satu tahun lagi, untuk dirayakan</span>
-      <h2 style="font-family: var(--font-title); font-size: 1.5rem; font-style: italic; color: #3C2A21;">beberapa cerita yg ingin tetap tinggal📸</h2>
+      <h2 style="font-family: var(--font-title); font-size: 1.4rem; font-style: italic; color: #3C2A21;">beberapa cerita yg ingin tetap tinggal📸</h2>
 
       <div class="polaroid-grid">
         <div class="polaroid-card">
@@ -525,21 +626,49 @@
         <div class="polaroid-card">
           <div class="tape"></div>
           <img src="foto6.jpg.png" alt="Foto 2">
-          <div class="caption">Met Ultah yaww✨</div>
+          <div class="caption">Met ultah yaww✨</div>
         </div>
       </div>
 
       <div class="short-msg">
-        "Tetaplah menjadi kamu, dengan segala hangat dan baik yang selalu kamu bawa kemanapun 🌾"
+        "Tetaplah menjadi kamu, dengan segala hangat dan baik yang selalu kamu bawa kemanapun🍂"
       </div>
 
-      <button class="btn-next" onclick="nextSlide(3)">Surat lengkapnya disiniii ✉️</button>
+      <button class="btn-next" onclick="nextSlide(3)">lanjut yuukk!🎈</button>
     </div>
 
-    <!-- SLIDE 3: Surat Panjang & Aksi -->
+    <!-- SLIDE 3 (BARU): Kalender Spesial & Foto Tambahan -->
     <div class="slide" id="slide3">
+      <span class="badge-tag">23.08.2002</span>
+      <h2 style="font-family: var(--font-title); font-size: 1.4rem; font-style: italic; color: #3C2A21;">Hari ketika semesta mengenalmu🎂</h2>
+
+      <div class="calendar-card">
+        <div class="calendar-header">a day worth celebrating!</div>
+        <div class="calendar-grid-wrapper">
+          <div class="calendar-date-display">
+            <span class="date-heart">💖</span>
+            <span class="calendar-day">23</span>
+            <span class="calendar-month">Agustus</span>
+          </div>
+
+          <!-- Foto Tambahan: Ganti src sesuai nama file foto kamu di GitHub -->
+          <div class="calendar-photo-container">
+            <img src="foto7.jpg.png" alt="Foto Spesial">
+          </div>
+        </div>
+      </div>
+
+      <div class="short-msg">
+        "23 Agustus — hari yang sederhana, tapi selalu layak dirayakan ✨"
+      </div>
+
+      <button class="btn-next" onclick="nextSlide(4)">aku titip beberapa kata disini💌</button>
+    </div>
+
+    <!-- SLIDE 4: Surat Panjang & Aksi -->
+    <div class="slide" id="slide4">
       <span class="badge-tag">a little letter for hilwa</span>
-      <h2 style="font-family: var(--font-title); font-size: 1.4rem; font-style: italic; color: #3C2A21; margin-bottom: 12px;">untukmu, di usia yang baru💌</h2>
+      <h2 style="font-family: var(--font-title); font-size: 1.3rem; font-style: italic; color: #3C2A21; margin-bottom: 12px;">untukmu, di usia yang baru💌</h2>
 
       <div class="letter-box">
         <div class="stamp">💌</div>
@@ -549,23 +678,24 @@
         <p>Semoga langkahmu dipertemukan dengan banyak hal baik, orang-orang yg tulus, dan tempat-tempat yg membuatmu merasa cukup.</p>
         <p>Kalau nanti ada hari yang terasa berat, semoga kamu selalu ingat bahwa hidup tidak harus selalu indah untuk tetap layak dirayakan.</p>
         <p>Selamat untuk segala yang telah tumbuh dalam dirimu, dan untuk segala hal indah yg masih menunggumu di depan.</p>
-        <p>Selamat bertumbuh, dan tetaplah menjadi kamu ✨</p>
+        <p>Selamat bertumbuh, dan tetaplah menjadi kamu✨</p>
         <p style="text-align: right; margin-top: 15px; font-family: var(--font-hand); font-size: 1.3rem; color: var(--accent-brown);">
-          Dari aku yg beruntung pernah menjadi bagian kecil dari ceritamu,<br>[Linanda] 🤍
+          Dari aku yg beruntung pernah menjadi bagian kecil dari ceritamu,<br>[Linanda]
         </p>
       </div>
 
       <div class="action-group">
         <button class="btn-secondary" onclick="triggerConfetti()">Klik dongg🎉</button>
-        <button class="btn-next" onclick="restart()">Dari awal lagi🔄</button>
+        <button class="btn-next" onclick="restart()">Balik lagi ? 🔄</button>
       </div>
     </div>
 
-    <!-- Slide Dots Indicator -->
+    <!-- Slide Dots Indicator (4 Dots) -->
     <div class="slide-dots">
       <div class="dot-item active" id="dot1"></div>
       <div class="dot-item" id="dot2"></div>
       <div class="dot-item" id="dot3"></div>
+      <div class="dot-item" id="dot4"></div>
     </div>
 
   </div>
@@ -575,12 +705,8 @@
     const music = document.getElementById('bgMusic');
     let isMusicPlaying = false;
 
-    // Fungsi pertama kali tombol "Buka Ucapan" diklik
     function startJourney() {
-      // Sembunyikan layar pembuka
       document.getElementById('welcomeScreen').classList.add('hidden');
-      
-      // Putar musik secara paksa setelah ada gesture klik
       playMusic();
     }
 
@@ -610,7 +736,7 @@
 
     function nextSlide(num) {
       showSlide(num);
-      if (num === 3) {
+      if (num === 3 || num === 4) {
         triggerConfetti();
       }
     }
@@ -641,6 +767,7 @@
       if (isMusicPlaying) {
         music.pause();
         isMusicPlaying = false;
+        document.getElementById('musicIcon').innerText = '0️⃣';
         document.getElementById('musicIcon').innerText = '🔇';
       } else {
         playMusic();
