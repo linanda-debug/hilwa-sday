@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday! 🎈</title>
+  <title>Happy Birthday Hilwa! 🎈</title>
   
-  <!-- Google Fonts: Vibes Nadin Amizah (Playfair, Cormorant Garamond, Alex Brush, Caveat) -->
+  <!-- Google Fonts: Vibes Nadin Amizah -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Caveat:wght@500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Playfair+Display:ital,wght@0,500;0,600;1,400&display=swap" rel="stylesheet">
@@ -22,7 +22,7 @@
       --card-bg: rgba(255, 253, 250, 0.90);
       --text-color: #4A3E3D;
       
-      /* Tipografi Utama Khas Nadin Amizah */
+      /* Tipografi Utama */
       --font-title: 'Playfair Display', serif;
       --font-body: 'Cormorant Garamond', serif;
       --font-script: 'Alex Brush', cursive;
@@ -162,9 +162,9 @@
       letter-spacing: 2px;
       text-transform: uppercase;
       margin-bottom: 16px;
+      display: inline-block;
     }
 
-    /* Ukuran Judul & Subtitle yang Sudah Disesuaikan (Dikecilkan) */
     .title-main {
       font-family: var(--font-title);
       font-size: 1.5rem;
@@ -287,13 +287,8 @@
       transition: transform 0.3s ease;
     }
 
-    .polaroid-card:nth-child(1) {
-      transform: rotate(-4deg);
-    }
-
-    .polaroid-card:nth-child(2) {
-      transform: rotate(3deg);
-    }
+    .polaroid-card:nth-child(1) { transform: rotate(-4deg); }
+    .polaroid-card:nth-child(2) { transform: rotate(3deg); }
 
     .polaroid-card:hover {
       transform: scale(1.05) rotate(0deg);
@@ -338,7 +333,7 @@
       border: 1px solid #E3CAA5;
     }
 
-    /* SLIDE 3 (BARU): KALENDER & FOTO SPESIAL */
+    /* SLIDE 3 STYLES: KALENDER */
     .calendar-card {
       background: #FFFDF9;
       border: 1px solid #E3CAA5;
@@ -446,13 +441,11 @@
       position: relative;
       border: 1.5px dashed #D5B9B2;
       margin-bottom: 20px;
-      max-height: 320px;
+      max-height: 300px;
       overflow-y: auto;
     }
 
-    .letter-box p {
-      margin-bottom: 12px;
-    }
+    .letter-box p { margin-bottom: 12px; }
 
     .stamp {
       position: absolute;
@@ -460,6 +453,298 @@
       right: 15px;
       font-size: 1.5rem;
       opacity: 0.8;
+    }
+
+    /* SLIDE 5 STYLES (Kejutan 12 Foto Memories Photobooth) */
+    .memories-header { margin-bottom: 10px; }
+
+    .memories-title {
+      font-family: var(--font-title);
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #3C2A21;
+      margin-bottom: 2px;
+    }
+
+    .memories-subtitle {
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--accent-brown);
+    }
+
+    .photo-gallery-container {
+      position: relative;
+      width: 100%;
+      max-height: 380px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 10px 5px 25px 5px;
+      margin-bottom: 15px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--accent-soft) transparent;
+    }
+
+    .photo-gallery-container::-webkit-scrollbar { width: 4px; }
+    .photo-gallery-container::-webkit-scrollbar-thumb {
+      background-color: var(--accent-soft);
+      border-radius: 10px;
+    }
+
+    .photobooth-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      position: relative;
+      width: 100%;
+    }
+
+    .photo-strip {
+      background: #FFFDF9;
+      border-radius: 8px;
+      padding: 8px 8px 12px 8px;
+      box-shadow: 0 10px 25px rgba(139, 94, 52, 0.15);
+      width: 45%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+      border: 1px solid rgba(227, 202, 165, 0.5);
+      opacity: 0;
+      transform: scale(0.6) translateY(30px);
+      transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .slide.active .photo-strip {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+
+    .slide.active .strip-1 {
+      transition-delay: 0.1s;
+      transform: rotate(-3deg);
+      animation: floatStrip1 5s ease-in-out infinite alternate 0.8s;
+    }
+    .slide.active .strip-2 {
+      transition-delay: 0.25s;
+      transform: rotate(3deg);
+      animation: floatStrip2 5.5s ease-in-out infinite alternate 1s;
+    }
+    .slide.active .strip-3 {
+      transition-delay: 0.4s;
+      transform: rotate(-2deg);
+      animation: floatStrip1 4.8s ease-in-out infinite alternate 1.2s;
+    }
+    .slide.active .strip-4 {
+      transition-delay: 0.55s;
+      transform: rotate(4deg);
+      animation: floatStrip2 5.2s ease-in-out infinite alternate 1.4s;
+    }
+
+    @keyframes floatStrip1 {
+      0% { transform: rotate(-3deg) translateY(0px); }
+      100% { transform: rotate(-1deg) translateY(-8px); }
+    }
+    @keyframes floatStrip2 {
+      0% { transform: rotate(3deg) translateY(0px); }
+      100% { transform: rotate(5deg) translateY(-8px); }
+    }
+
+    .photo-strip img {
+      width: 100%;
+      height: 95px;
+      object-fit: cover;
+      border-radius: 4px;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .photo-strip img:hover { transform: scale(1.04); }
+
+    .flower-decor {
+      position: absolute;
+      font-size: 1.5rem;
+      pointer-events: none;
+      z-index: 10;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+    }
+    .flower-1 { top: -12px; left: -10px; transform: rotate(-15deg); }
+    .flower-2 { bottom: -10px; right: -10px; transform: rotate(20deg); }
+
+    /* POP-UP GAME CLUMSY CHECK STYLES */
+    .game-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(60, 42, 33, 0.6);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s ease;
+      padding: 20px;
+    }
+
+    .game-modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .game-modal-card {
+      background: #FFFDF9;
+      border-radius: 25px;
+      padding: 30px 22px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+      border: 2px solid #E3CAA5;
+      transform: scale(0.8) translateY(20px);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .game-modal-overlay.active .game-modal-card {
+      transform: scale(1) translateY(0);
+    }
+
+    /* EFEK VISUAL "BARANG JATUH" (Kunci, HP, Kacamata) */
+    .falling-container {
+      position: relative;
+      width: 100%;
+      height: 45px;
+      margin-bottom: 5px;
+      pointer-events: none;
+    }
+
+    .falling-item {
+      position: absolute;
+      font-size: 1.8rem;
+      animation: itemFall 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+    }
+
+    .falling-item.key { left: 20%; animation-delay: 0s; }
+    .falling-item.phone { left: 50%; animation-delay: 0.8s; }
+    .falling-item.glasses { left: 80%; animation-delay: 1.5s; }
+
+    @keyframes itemFall {
+      0% { transform: translateY(-30px) rotate(0deg); opacity: 0; }
+      30% { opacity: 1; }
+      100% { transform: translateY(35px) rotate(45deg); opacity: 0.2; }
+    }
+
+    .game-title {
+      font-family: var(--font-title);
+      font-size: 1.4rem;
+      color: #3C2A21;
+      margin-bottom: 6px;
+    }
+
+    .game-desc {
+      font-family: var(--font-body);
+      font-size: 1.1rem;
+      color: var(--accent-brown);
+      margin-bottom: 18px;
+    }
+
+    .game-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .btn-option {
+      background: #FAF6F0;
+      border: 1.5px solid #D5B9B2;
+      padding: 12px 14px;
+      border-radius: 15px;
+      font-family: var(--font-body);
+      font-size: 1.05rem;
+      color: #4A3E3D;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+    }
+
+    .btn-option:hover {
+      background: #EFE3D3;
+      border-color: var(--accent-brown);
+      transform: translateX(4px);
+    }
+
+    .game-result-box {
+      display: none;
+      background: #FAF6F0;
+      border: 1.5px dashed var(--accent-brown);
+      padding: 15px;
+      border-radius: 15px;
+      font-family: var(--font-hand);
+      font-size: 1.35rem;
+      color: #3C2A21;
+      margin-bottom: 15px;
+      animation: fadeIn 0.4s ease;
+    }
+
+    /* CHECKLIST LUCU STYLES */
+    .clumsy-checklist {
+      display: none;
+      background: #FAF6F0;
+      border: 1px solid #E3CAA5;
+      padding: 14px;
+      border-radius: 15px;
+      text-align: left;
+      margin-bottom: 18px;
+      font-family: var(--font-body);
+      font-size: 1.05rem;
+      color: #3C2A21;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .checklist-title {
+      font-family: var(--font-title);
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--accent-brown);
+      border-bottom: 1px dashed #D5B9B2;
+      padding-bottom: 4px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .check-item input[type="checkbox"] {
+      accent-color: var(--accent-brown);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    .check-item.highlight {
+      font-style: italic;
+      color: var(--accent-brown);
+      font-weight: 600;
+      margin-top: 8px;
+      padding-top: 4px;
+      border-top: 1px dotted #E3CAA5;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* BUTTONS */
@@ -478,6 +763,7 @@
       transition: all 0.2s ease;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
     }
 
@@ -492,9 +778,7 @@
       width: 100%;
     }
 
-    .action-group button {
-      flex: 1;
-    }
+    .action-group button { flex: 1; }
 
     .btn-secondary {
       background: #EFE3D3;
@@ -509,9 +793,7 @@
       transition: all 0.2s;
     }
 
-    .btn-secondary:hover {
-      background: #E3CAA5;
-    }
+    .btn-secondary:hover { background: #E3CAA5; }
 
     /* Floating Music Control Button */
     .music-btn {
@@ -534,11 +816,9 @@
       transition: all 0.2s;
     }
 
-    .music-btn:hover {
-      background: #EFE3D3;
-    }
+    .music-btn:hover { background: #EFE3D3; }
 
-    /* Dots Indicator */
+    /* Dots Indicator (5 Dots) */
     .slide-dots {
       display: flex;
       gap: 8px;
@@ -563,7 +843,8 @@
     @media (max-width: 480px) {
       .title-main { font-size: 1.35rem; }
       .title-sub { font-size: 2.2rem; }
-      .wrapper { min-height: 520px; padding: 24px 16px 45px 16px; }
+      .wrapper { min-height: 540px; padding: 24px 16px 45px 16px; }
+      .photo-strip img { height: 85px; }
     }
   </style>
 </head>
@@ -573,7 +854,7 @@
   <div class="welcome-screen" id="welcomeScreen">
     <div class="welcome-content">
       <h2 style="font-family: var(--font-title); font-style: italic; color: #3C2A21; margin-bottom: 20px; font-size: 1.8rem;">Ada pesan untukmu 💌</h2>
-      <button class="btn-open" onclick="startJourney()">Lets Goooo</button>
+      <button class="btn-open" onclick="startJourney()">Lezgooow!</button>
     </div>
   </div>
 
@@ -621,12 +902,12 @@
         <div class="polaroid-card">
           <div class="tape"></div>
           <img src="foto4.jpg.png" alt="Foto 1">
-          <div class="caption">Untuk dua puluh empat yg baru🤍</div>
+          <div class="caption">Untuk dua puluh empat yg baru🌺</div>
         </div>
         <div class="polaroid-card">
           <div class="tape"></div>
           <img src="foto9.jpg.png" alt="Foto 2">
-          <div class="caption">Met ultah yaww✨</div>
+          <div class="caption">Met ultah yaww🌸</div>
         </div>
       </div>
 
@@ -637,21 +918,20 @@
       <button class="btn-next" onclick="nextSlide(3)">lanjut yuuk!🎈</button>
     </div>
 
-    <!-- SLIDE 3 (BARU): Kalender Spesial & Foto Tambahan -->
+    <!-- SLIDE 3: Kalender Spesial & Foto Tambahan -->
     <div class="slide" id="slide3">
       <span class="badge-tag">23.08.2002</span>
-      <h2 style="font-family: var(--font-title); font-size: 1.4rem; font-style: italic; color: #3C2A21;">Hari ketika semesta mengenalmu🎂</h2>
+      <h2 style="font-family: var(--font-title); font-size: 1.4rem; font-style: italic; color: #3C2A21;">Hari ketika semesta mengenalmu👶🏻</h2>
 
       <div class="calendar-card">
         <div class="calendar-header">a day worth celebrating!</div>
         <div class="calendar-grid-wrapper">
           <div class="calendar-date-display">
-            <span class="date-heart">💖</span>
+            <span class="date-heart">📌</span>
             <span class="calendar-day">23</span>
             <span class="calendar-month">Agustus</span>
           </div>
 
-          <!-- Foto Tambahan: Ganti src sesuai nama file foto kamu di GitHub -->
           <div class="calendar-photo-container">
             <img src="foto7.jpg.png" alt="Foto Spesial">
           </div>
@@ -659,7 +939,7 @@
       </div>
 
       <div class="short-msg">
-        "23 Agustus — hari yang sederhana, tapi selalu layak dirayakan ✨"
+        "23 Agustus — hari yang sederhana, tapi selalu layak dirayakan💐"
       </div>
 
       <button class="btn-next" onclick="nextSlide(4)">aku titip beberapa kata disini💌</button>
@@ -668,7 +948,7 @@
     <!-- SLIDE 4: Surat Panjang & Aksi -->
     <div class="slide" id="slide4">
       <span class="badge-tag">a little letter for hilwa</span>
-      <h2 style="font-family: var(--font-title); font-size: 1.3rem; font-style: italic; color: #3C2A21; margin-bottom: 12px;">untukmu, di usia yang baru💌</h2>
+      <h2 style="font-family: var(--font-title); font-size: 1.3rem; font-style: italic; color: #3C2A21; margin-bottom: 12px;">untukmu, di usia yang baru🌻</h2>
 
       <div class="letter-box">
         <div class="stamp">💌</div>
@@ -677,27 +957,111 @@
         <p>Semoga di perjalanan yg baru ini, kamu selalu menemukan alasan untuk jatuh cinta pada hidup, bahkan di hari-hari yang tidak mudah.</p>
         <p>Semoga langkahmu dipertemukan dengan banyak hal baik, orang-orang yg tulus, dan tempat-tempat yg membuatmu merasa cukup.</p>
         <p>Kalau nanti ada hari yang terasa berat, semoga kamu selalu ingat bahwa hidup tidak harus selalu indah untuk tetap layak dirayakan.</p>
-        <p>Selamat untuk segala yang telah tumbuh dalam dirimu, dan untuk segala hal indah yg masih menunggumu di depan.</p>
-        <p>Selamat bertumbuh, dan tetaplah menjadi kamu✨</p>
+        <p>Selamat atas segala yang telah tumbuh dalam dirimu, dan untuk segala hal indah yg masih menunggumu di depan.</p>
+        <p>Selamat bertumbuh, dan tetaplah menjadi kamu🌻</p>
         <p style="text-align: right; margin-top: 15px; font-family: var(--font-hand); font-size: 1.3rem; color: var(--accent-brown);">
-          Dari aku yg beruntung pernah menjadi bagian kecil dari ceritamu,<br>[Linanda]
+          Dari aku yg beruntung pernah menjadi bagian kecil di ceritamu,<br>[Linan]
         </p>
       </div>
 
       <div class="action-group">
-        <button class="btn-secondary" onclick="triggerConfetti()">Klik dongg🎉</button>
-        <button class="btn-next" onclick="restart()">Balik lagi ? 🔄</button>
+        <!-- Klik dongg mengarah ke Slide 5 (Kejutan Foto) -->
+        <button class="btn-secondary" onclick="goToSurprise()">Klik dongg🎉</button>
+        <!-- Balik lagi memicu Pop Up Game Clumsy -->
+        <button class="btn-next" onclick="openClumsyGame()">Terakhir, janji.</button>
       </div>
     </div>
 
-    <!-- Slide Dots Indicator (4 Dots) -->
+    <!-- SLIDE 5: Photobooth Gallery 12 Foto Pop-Up -->
+    <div class="slide" id="slide5">
+      <div class="memories-header">
+        <h2 class="memories-title">Us Being Us</h2>
+        <p class="memories-subtitle">No context needed.. just good memories</p>
+      </div>
+
+      <div class="photo-gallery-container">
+        <div class="flower-decor flower-1">🌸</div>
+        <div class="flower-decor flower-2">🌼</div>
+
+        <div class="photobooth-grid">
+          <div class="photo-strip strip-1">
+            <img src="foto111.png" alt="Memory 1">
+            <img src="foto222.png" alt="Memory 2">
+            <img src="foto333.png" alt="Memory 3">
+          </div>
+
+          <div class="photo-strip strip-2">
+            <img src="foto11.png" alt="Memory 4">
+            <img src="foto12.png" alt="Memory 5">
+            <img src="foto13.png" alt="Memory 6">
+          </div>
+
+          <div class="photo-strip strip-3">
+            <img src="foto55.png" alt="Memory 7">
+            <img src="foto66.png" alt="Memory 8">
+            <img src="foto44.png" alt="Memory 9">
+          </div>
+
+          <div class="photo-strip strip-4">
+            <img src="foto88.png" alt="Memory 10">
+            <img src="foto77.png" alt="Memory 11">
+            <img src="foto99.png" alt="Memory 12">
+          </div>
+        </div>
+      </div>
+
+      <!-- Diubah untuk kembali ke slide sebelumnya (Slide 4) -->
+      <button class="btn-next" onclick="nextSlide(4)">Kembali ⬅️</button>
+    </div>
+
+    <!-- Slide Dots Indicator -->
     <div class="slide-dots">
       <div class="dot-item active" id="dot1"></div>
       <div class="dot-item" id="dot2"></div>
       <div class="dot-item" id="dot3"></div>
       <div class="dot-item" id="dot4"></div>
+      <div class="dot-item" id="dot5"></div>
     </div>
 
+  </div>
+
+  <!-- POP-UP MODAL: GAME CLUMSY CHECK -->
+  <div class="game-modal-overlay" id="clumsyModal">
+    <div class="game-modal-card">
+      
+      <!-- Efek Visual "Jatuh" -->
+      <div class="falling-container">
+        <span class="falling-item key">🔑</span>
+        <span class="falling-item phone">📱</span>
+        <span class="falling-item glasses">👓</span>
+        <span class="falling-item Earphone">🎧</span>
+      </div>
+
+      <span class="badge-tag" style="margin-bottom: 10px;">Mini Clumsy Check 🙈</span>
+      <h3 class="game-title">Tahan duluuu!🛑</h3>
+      <p class="game-desc">Sebelum balik ke awal, jujur ya... seberapa clumsy kamu hari ini?</p>
+
+      <div class="game-options" id="gameOptions">
+        <button class="btn-option" onclick="selectAnswer(1)">1. Gak clumsy kok, cuma kebetulan aja barang suka jatuh sendiri 😭</button>
+        <button class="btn-option" onclick="selectAnswer(2)">2. Clumsy dikit aja, selebihnya masih pelupa🤪</button>
+        <button class="btn-option" onclick="selectAnswer(3)">3. Level 1000! Clumsy adalah jalan ninjaku 👑</button>
+      </div>
+
+      <div class="game-result-box" id="gameResult"></div>
+
+      <!-- Checklist Lucu Interactive -->
+      <div class="clumsy-checklist" id="clumsyChecklist">
+        <div class="checklist-title">📋 Checklist Clumsy Hari Ini:</div>
+        <div class="check-item"><input type="checkbox" checked disabled> Lupa taruh kunci motor 🔑</div>
+        <div class="check-item"><input type="checkbox" checked disabled> Earphone mati sebelah 🎧</div>
+        <div class="check-item"><input type="checkbox" checked disabled> Barang jatuh tanpa alasan 💥</div>
+        <div class="check-item highlight"><input type="checkbox" id="autoCheck"> Dulu ada aku yang siap bantu, sekarang siapa? huhu</div>
+      </div>
+
+      <!-- Tombol aksi di modal game -->
+      <button class="btn-next" id="btnContinueRestart" style="display: none; width: 100%; justify-content: center;">
+      </button>
+    </div>
   </div>
 
   <script>
@@ -741,6 +1105,85 @@
       }
     }
 
+    function goToSurprise() {
+      showSlide(5);
+      triggerConfetti();
+      
+      setTimeout(() => {
+        confetti({
+          particleCount: 50,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          colors: ['#8B5E34', '#D5B9B2', '#E3CAA5']
+        });
+        confetti({
+          particleCount: 50,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          colors: ['#8B5E34', '#D5B9B2', '#E3CAA5']
+        });
+      }, 400);
+    }
+
+    /* FUNGSI POP-UP GAME CLUMSY */
+    function openClumsyGame() {
+      resetGameModal();
+      document.getElementById('clumsyModal').classList.add('active');
+    }
+
+    function resetGameModal() {
+      document.getElementById('gameOptions').style.display = 'flex';
+      document.getElementById('gameResult').style.display = 'none';
+      document.getElementById('clumsyChecklist').style.display = 'none';
+      document.getElementById('btnContinueRestart').style.display = 'none';
+      document.getElementById('autoCheck').checked = false;
+    }
+
+    function selectAnswer(optionNum) {
+      const resultBox = document.getElementById('gameResult');
+      const checklistBox = document.getElementById('clumsyChecklist');
+      const actionBtn = document.getElementById('btnContinueRestart');
+      
+      document.getElementById('gameOptions').style.display = 'none';
+
+      if (optionNum === 1) {
+        resultBox.innerHTML = "Wkwkwk alibi aja yaa! Tetap aja yang menjatuhkan itu tangan kamu hilwaaa! 😂";
+        actionBtn.innerHTML = "Coba pilih poin lain 🔄";
+        actionBtn.onclick = resetGameModal;
+      } else if (optionNum === 2) {
+        resultBox.innerHTML = "Dikit dari mananya? Tapi its okayy, lupa itu manusiawi kok hahahha";
+        actionBtn.innerHTML = "Coba pilih poin lain 🔄";
+        actionBtn.onclick = resetGameModal;
+      } else if (optionNum === 3) {
+        resultBox.innerHTML = "Fix terkonfirmasi! Terdeteksi tingkat kecerobohan 99%. Membutuhkan partner yg sabar buat nyariin kacamata/kunci motor yg tiba-tiba suka menghilang!👑";
+        actionBtn.innerHTML = "Aktifkan fitur 'Anti lupa' 🔄";
+        actionBtn.onclick = confirmRestartFromGame;
+      }
+
+      resultBox.style.display = 'block';
+      checklistBox.style.display = 'block';
+      actionBtn.style.display = 'inline-flex';
+
+      /* Otomatis centang item terakhir secara perlahan */
+      setTimeout(() => {
+        document.getElementById('autoCheck').checked = true;
+      }, 600);
+
+      confetti({
+        particleCount: 40,
+        spread: 50,
+        origin: { y: 0.5 },
+        colors: ['#8B5E34', '#D5B9B2']
+      });
+    }
+
+    function confirmRestartFromGame() {
+      document.getElementById('clumsyModal').classList.remove('active');
+      restart();
+    }
+
     function restart() {
       const gift = document.getElementById('giftBox');
       gift.classList.remove('opened');
@@ -767,7 +1210,6 @@
       if (isMusicPlaying) {
         music.pause();
         isMusicPlaying = false;
-        document.getElementById('musicIcon').innerText = '0️⃣';
         document.getElementById('musicIcon').innerText = '🔇';
       } else {
         playMusic();
