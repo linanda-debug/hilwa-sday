@@ -47,6 +47,42 @@
       padding: 20px;
     }
 
+    /* Container untuk Semburan Bunga & Kado (Floating Elements) */
+    #flowerBurstContainer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 9999;
+      overflow: hidden;
+    }
+
+    .burst-item {
+      position: absolute;
+      user-select: none;
+      will-change: transform, opacity;
+      animation: burstAnim 2.5s cubic-bezier(0.12, 0.8, 0.32, 1) forwards;
+    }
+
+    @keyframes burstAnim {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.2) rotate(0deg);
+      }
+      20% {
+        opacity: 1;
+      }
+      80% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(var(--end-scale)) rotate(var(--rot));
+      }
+    }
+
     /* Layar Pembuka (Welcome Screen) */
     .welcome-screen {
       position: fixed;
@@ -850,6 +886,9 @@
 </head>
 <body>
 
+  <!-- Container khusus animasi semburan bunga & kado -->
+  <div id="flowerBurstContainer"></div>
+
   <!-- Layar Pembuka (Welcome Cover) -->
   <div class="welcome-screen" id="welcomeScreen">
     <div class="welcome-content">
@@ -1059,7 +1098,8 @@
       </div>
 
       <!-- Tombol aksi di modal game -->
-      <button class="btn-next" id="btnContinueRestart" style="display: none; width: 100%; justify-content: center;">
+      <button class="btn-next" id="btnContinueRestart" onclick="restartToBeginning()" style="display: none; width: 100%; justify-content: center;">
+        Ulangi Dari Awal 🔄
       </button>
     </div>
   </div>
@@ -1069,9 +1109,89 @@
     const music = document.getElementById('bgMusic');
     let isMusicPlaying = false;
 
+    // FUNGSI ANIMASI SEMBURAN BUNGA & KADO PENUH SCREEN
+    function triggerFlowerAndGiftBurst() {
+      const container = document.getElementById('flowerBurstContainer');
+      container.innerHTML = ''; // Bersihkan container sebelumnya
+
+      const items = ['🌸', '🌺', '🌻', '🌹', '🌷', '💐', '🎁', '✨', '🌼', '💖', '🎀'];
+      const totalItems = 130; // Jumlah elemen yang menyembur memenuhi layar
+
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
+
+      for (let i = 0; i < totalItems; i++) {
+        const el = document.createElement('div');
+        el.className = 'burst-item';
+        
+        // Pilih acak karakter emoji kado / bunga
+        el.innerText = items[Math.floor(Math.random() * items.length)];
+
+        // Posisi awal di tengah layar
+        el.style.left = centerX + 'px';
+        el.style.top = centerY + 'px';
+
+        // Ukuran acak
+        const size = Math.random() * 2 + 1.2; // 1.2rem - 3.2rem
+        el.style.fontSize = size + 'rem';
+
+        // Arah lemparan acak ke seluruh penjuru layar (360 derajat)
+        const angle = Math.random() * Math.PI * 2;
+        const distance = Math.random() * Math.max(window.innerWidth, window.innerHeight) * 0.8 + 100;
+
+        const tx = Math.cos(angle) * distance;
+        const ty = Math.sin(angle) * distance;
+        const rot = (Math.random() - 0.5) * 720; // Putaran acak
+        const endScale = Math.random() * 0.8 + 0.5;
+
+        // Atur CSS variable untuk animasi
+        el.style.setProperty('--tx', `${tx}px`);
+        el.style.setProperty('--ty', `${ty}px`);
+        el.style.setProperty('--rot', `${rot}deg`);
+        el.style.setProperty('--end-scale', endScale);
+
+        // Berikan sedikit delay acak biar semburan tampak lebih organik & realistis
+        el.style.animationDelay = (Math.random() * 0.25) + 's';
+
+        container.appendChild(el);
+      }
+
+      // Hapus elemen setelah animasi selesai agar tidak memberatkan browser
+      setTimeout(() => {
+        container.innerHTML = '';
+      }, 3000);
+    }
+
     function startJourney() {
-      document.getElementById('welcomeScreen').classList.add('hidden');
-      playMusic();
+      // Trigger Semburan Bunga & Kado memenuhi Layar
+      triggerFlowerAndGiftBurst();
+
+      // Sembunyikan welcome screen setelah ada jeda semburan
+      setTimeout(() => {
+        document.getElementById('welcomeScreen').classList.add('hidden');
+        playMusic();
+      }, 400);
+    }
+
+    function playMusic() {
+      music.play().then(() => {
+        isMusicPlaying = true;
+        document.getElementById('musicIcon').innerText = '🔊';
+      }).catch(err => {
+        console.log("Autoplay ditolak oleh browser:", err);
+      });
+    }
+
+    function toggleMusic() {
+      if (isMusicPlaying) {
+        music.pause();
+        isMusicPlaying = false;
+        document.getElementById('musicIcon').innerText = '🔇';
+      } else {
+        music.play();
+        isMusicPlaying = true;
+        document.getElementById('musicIcon').innerText = '🔊';
+      }
     }
 
     function showSlide(slideNum) {
@@ -1127,6 +1247,17 @@
       }, 400);
     }
 
+    function triggerConfetti() {
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 80,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ['#8B5E34', '#D5B9B2', '#E3CAA5', '#FFFDF9']
+        });
+      }
+    }
+
     /* FUNGSI POP-UP GAME CLUMSY */
     function openClumsyGame() {
       resetGameModal();
@@ -1138,82 +1269,42 @@
       document.getElementById('gameResult').style.display = 'none';
       document.getElementById('clumsyChecklist').style.display = 'none';
       document.getElementById('btnContinueRestart').style.display = 'none';
-      document.getElementById('autoCheck').checked = false;
+      const autoCheck = document.getElementById('autoCheck');
+      if (autoCheck) autoCheck.checked = false;
     }
 
-    function selectAnswer(optionNum) {
-      const resultBox = document.getElementById('gameResult');
-      const checklistBox = document.getElementById('clumsyChecklist');
-      const actionBtn = document.getElementById('btnContinueRestart');
-      
+    function selectAnswer(option) {
       document.getElementById('gameOptions').style.display = 'none';
+      const resultBox = document.getElementById('gameResult');
+      const checklist = document.getElementById('clumsyChecklist');
+      const btnRestart = document.getElementById('btnContinueRestart');
 
-      if (optionNum === 1) {
-        resultBox.innerHTML = "Wkwkwk alibi aja yaa! Tetap aja yang menjatuhkan itu tangan kamu hilwaaa! 😂";
-        actionBtn.innerHTML = "Coba pilih poin lain 🔄";
-        actionBtn.onclick = resetGameModal;
-      } else if (optionNum === 2) {
-        resultBox.innerHTML = "Dikit dari mananya? Tapi its okayy, lupa itu manusiawi kok hahahha";
-        actionBtn.innerHTML = "Coba pilih poin lain 🔄";
-        actionBtn.onclick = resetGameModal;
-      } else if (optionNum === 3) {
-        resultBox.innerHTML = "Fix terkonfirmasi! Terdeteksi tingkat kecerobohan 99%. Membutuhkan partner yg sabar buat nyariin kacamata/kunci motor yg tiba-tiba suka menghilang!👑";
-        actionBtn.innerHTML = "Aktifkan fitur 'Anti lupa' 🔄";
-        actionBtn.onclick = confirmRestartFromGame;
+      let text = "";
+      if (option === 1) {
+        text = "Haha iyaaa percaya kok, barangnya emang punya gaya gravitasi sendiri ya! 😆";
+      } else if (option === 2) {
+        text = "Dikit katanya... padahal suka bingung cari barang yang padahal lagi dipegang! 😜";
+      } else {
+        text = "Tuh kan ngakuuu! Tapi gapapa, clumsy-nya kamu itu yang bikin gemes 👑";
       }
 
+      resultBox.innerText = text;
       resultBox.style.display = 'block';
-      checklistBox.style.display = 'block';
-      actionBtn.style.display = 'inline-flex';
+      checklist.style.display = 'block';
 
-      /* Otomatis centang item terakhir secara perlahan */
       setTimeout(() => {
-        document.getElementById('autoCheck').checked = true;
+        const autoCheck = document.getElementById('autoCheck');
+        if (autoCheck) autoCheck.checked = true;
       }, 600);
 
-      confetti({
-        particleCount: 40,
-        spread: 50,
-        origin: { y: 0.5 },
-        colors: ['#8B5E34', '#D5B9B2']
-      });
+      btnRestart.style.display = 'flex';
     }
 
-    function confirmRestartFromGame() {
+    function restartToBeginning() {
       document.getElementById('clumsyModal').classList.remove('active');
-      restart();
-    }
-
-    function restart() {
       const gift = document.getElementById('giftBox');
-      gift.classList.remove('opened');
+      if (gift) gift.classList.remove('opened');
       showSlide(1);
-    }
-
-    function triggerConfetti() {
-      confetti({
-        particleCount: 80,
-        spread: 70,
-        origin: { y: 0.6 },
-        colors: ['#8B5E34', '#A67B5B', '#E3CAA5', '#F5EBE0']
-      });
-    }
-
-    function playMusic() {
-      music.play().then(() => {
-        isMusicPlaying = true;
-        document.getElementById('musicIcon').innerText = '🔊';
-      }).catch(err => console.log("Audio play blocked", err));
-    }
-
-    function toggleMusic() {
-      if (isMusicPlaying) {
-        music.pause();
-        isMusicPlaying = false;
-        document.getElementById('musicIcon').innerText = '🔇';
-      } else {
-        playMusic();
-      }
     }
   </script>
 </body>
